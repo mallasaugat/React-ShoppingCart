@@ -37,13 +37,7 @@ function MyFirebase(){
 
       me.createProducts = async (productData) => {
         const productsRef = collection(db, "Products");
-        try {
-            const docRef = await addDoc(productsRef, productData);
-            return docRef.id; // Return the ID of the newly created document
-        } catch (error) {
-            console.error("Error adding product:", error);
-            return null; // Return null if there's an error
-        }
+        await addDoc(productsRef, productData);
     }
 
       
@@ -51,23 +45,21 @@ function MyFirebase(){
         console.log("Deleting product with ID:", id);
         const productsRef = collection(db, "Products");
     
-        try {
-            // Get all documents in the "Products" collection
-            const querySnapshot = await getDocs(productsRef);
-    
-            // Iterate through each document
-            querySnapshot.forEach(async (doc) => {
-                // Check if the document's "id" field matches the specified ID
-                const data = doc.data();
-                if (data.id === id) {
-                    // If it matches, delete the document
-                    await deleteDoc(doc.ref);
-                    console.log("Product deleted successfully!");
-                }
-            });
-        } catch (error) {
-            console.error("Error deleting product: ", error);
-        }
+        
+        // Get all documents in the "Products" collection
+        const querySnapshot = await getDocs(productsRef);
+
+        // Iterate through each document
+        querySnapshot.forEach(async (doc) => {
+            // Check if the document's "id" field matches the specified ID
+            const data = doc.data();
+            if (data.id === id) {
+                // If it matches, delete the document
+                await deleteDoc(doc.ref);
+                console.log("Product deleted successfully!");
+            }
+        });
+        
     }
     
     // Shopping Cart
@@ -103,7 +95,7 @@ function MyFirebase(){
             await addDoc(cartRef, productData);
         }
     
-        return; // No need to return docRef.id since we are not using it
+        
     }
 
     me.deleteCartProduct = async (id) => {
@@ -112,23 +104,20 @@ function MyFirebase(){
     
     
 
-        try {
-            // Get all documents in the "Products" collection
-            const querySnapshot = await getDocs(cartRef);
-    
-            // Iterate through each document
-            querySnapshot.forEach(async (doc) => {
-                // Check if the document's "id" field matches the specified ID
-                const data = doc.data();
-                if (data.id === id) {
-                    // If it matches, delete the document
-                    await deleteDoc(doc.ref);
-                    console.log("Product deleted successfully!");
-                }
-            });
-        } catch (error) {
-            console.error("Error deleting product: ", error);
-        }
+        // Get all documents in the "Products" collection
+        const querySnapshot = await getDocs(cartRef);
+
+        // Iterate through each document
+        querySnapshot.forEach(async (doc) => {
+            // Check if the document's "id" field matches the specified ID
+            const data = doc.data();
+            if (data.id === id) {
+                // If it matches, delete the document
+                await deleteDoc(doc.ref);
+                console.log("Product deleted successfully!");
+            }
+        });
+        
     }
       
 

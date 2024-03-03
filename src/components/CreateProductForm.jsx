@@ -1,8 +1,9 @@
-import React, {useEffect, useRef} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import PropTypes from "prop-types";
 import { myFirebase } from "../models/MyFirebase";
 
 export default function CreateProductForm({onAddProduct}){
+
 
     const nameRef = useRef();
     const priceRef = useRef();
@@ -11,17 +12,13 @@ export default function CreateProductForm({onAddProduct}){
 
         e.preventDefault();
 
-        // onAddProduct({
-        //     name: nameRef.current.value,
-        //     price: +priceRef.current.value,
-        //     image: "https://via.placeholder.com/150",
-        // })
-         myFirebase.createProducts({
+        onAddProduct({
             id: Math.floor(Math.random() * 100),
             name: nameRef.current.value,
             price: +priceRef.current.value,
             image: "https://via.placeholder.com/150",
-        });
+          });
+
     }
     
 
@@ -52,7 +49,3 @@ export default function CreateProductForm({onAddProduct}){
     )
 
 }
-
-// CreateProductForm.propTypes = {
-//     onAddProduct: PropTypes.object.isRequired,
-// };

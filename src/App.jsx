@@ -9,36 +9,47 @@ import CreateProductForm from "./components/CreateProductForm.jsx";
 import {myFirebase} from "./models/MyFirebase.js";
 
 export default function App() {
-  const [products, setProducts] = useState([
-  
-  ]);
+
+  const [products, setProducts] = useState([]);
 
   const [productsToBuy, setProductsToBuy] = useState([]);
 
-  const onAddProduct = () => {
+  const onAddProduct = async (product) => {
+
+    myFirebase.createProducts(product);
+
     setProducts([
       ...products,
-      {
-        id: products.at(-1).id + 1,
-        name: `Product ${products.length + 1}`,
-        price: 400,
-      },
+      product
     ]);
   };
 
-  const onAddProductToBuy = (product) => {
+  const onAddProductToBuy = async (product) => {
+    await myFirebase.addCartProducts(product);
     setProductsToBuy([
       ...productsToBuy, 
       product
-    ])
+    ]);
+
   };
 
+  // Cart from cart
   const onDeleteProduct = async (productToDelete) => {
-    // Remove the product from the UI first
-    setProductsToBuy(productsToBuy.filter((product) => product !== productToDelete));
 
-    // Then delete it from the Firebase
+    // Delete it from the Firebase
     await myFirebase.deleteCartProduct(productToDelete.id);
+
+    // Remove the product from the UI 
+    setProductsToBuy(productsToBuy.filter((product) => product !== productToDelete));
+    
+  };
+
+  // Delete product
+  const onDelete = async (id) => {
+
+    await myFirebase.deleteProduct(id);
+    // Remove the product from the UI 
+    setProducts(products.filter((product) => product.id !== id));
   };
 
   // Load the data from Firebase once when the component is mounted
@@ -57,7 +68,7 @@ export default function App() {
 
     getCartProducts();
 
-  }, []); // Empty array means run only once
+  }, []); 
 
   return (
     <div>
@@ -65,9 +76,9 @@ export default function App() {
       <h1>Basic Shopping Site</h1>
         <div className="col-8">
 
-          <ProductsList products={products} onAddProductToBuy={onAddProductToBuy}/>
+          <ProductsList products={products} onAddProductToBuy={onAddProductToBuy} onDelete={onDelete}/>
 
-          <CreateProductForm onAddProduct={onAddProduct}/>
+          <CreateProductForm onAddProduct={onAddProduct} />
         </div>
         {/* col-8 */}
 
@@ -76,15 +87,6 @@ export default function App() {
           <ShoppingCart productsToBuy={productsToBuy} onDeleteProduct={onDeleteProduct} />
         </div>
 
-
-        {/* <button onClick={
-
-          async ()=> {
-            const products = await myFirebase.getProducts();
-            console.log(products);
-          }
-
-        }>Get Documents</button> */}
 
       </div>
     </div>

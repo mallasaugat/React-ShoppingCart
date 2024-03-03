@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Product from "./Product";
 
-export default function ProductsList({ products, onAddProductToBuy }) {
+export default function ProductsList({ products, onAddProductToBuy, onDelete }) {
+
+
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3;
 
@@ -26,7 +28,7 @@ export default function ProductsList({ products, onAddProductToBuy }) {
       <h2>Products</h2>
       <div className="row">
         {currentProducts.map((p, i) => (
-          <Product key={i} product={p} onAddProductToBuy={onAddProductToBuy}></Product>
+          <Product key={i} product={p} onAddProductToBuy={onAddProductToBuy} onDelete={onDelete}></Product>
         ))}
       </div>
 
@@ -46,7 +48,9 @@ export default function ProductsList({ products, onAddProductToBuy }) {
   );
 }
 
-ProductsList.propTypes = {
-  products: PropTypes.array.isRequired,
+Product.propTypes = {
+  product: PropTypes.object.isRequired,
   onAddProductToBuy: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
+

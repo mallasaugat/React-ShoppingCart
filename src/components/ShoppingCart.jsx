@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function ShoppingCart({ productsToBuy, onDeleteProduct }) {
+  
   const uniqueProducts = [...new Set(productsToBuy)]; // Get unique products from the cart
 
   const renderProductToBuy = (product) => (
@@ -10,10 +11,6 @@ export default function ShoppingCart({ productsToBuy, onDeleteProduct }) {
       <button onClick={() => onDeleteProduct(product)}>Remove</button>
     </li>
   );
-
-  const getProductQuantity = (product) => {
-    return productsToBuy.filter((p) => p.id === product.id).length;
-  };
 
   return (
     <div>

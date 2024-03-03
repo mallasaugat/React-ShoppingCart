@@ -15,5 +15,5 @@
 - [Explanation](https://docs.google.com/document/d/1BGzU-THzVHLUwGCl8aSbzGLui9twuCoC6D6mS331YQo/edit?usp=sharing)
 
 ### References
-- Firebase: https://firebase.google.com/docs/firestore/quickstart
-- Pagination: https://levelup.gitconnected.com/a-simple-guide-to-pagination-in-react-facd6f785bd0
+- [Firebase](https://firebase.google.com/docs/firestore/quickstart)
+- [Pagination](https://levelup.gitconnected.com/a-simple-guide-to-pagination-in-react-facd6f785bd0)
